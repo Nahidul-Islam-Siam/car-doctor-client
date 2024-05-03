@@ -1,11 +1,30 @@
 import { Link } from 'react-router-dom';
 import img from '../../assets/images/login/login.svg'
+import { useContext } from 'react';
+import { AuthContex } from '../../Provider/AuthProviders';
+import SocialLogin from '../shared/SocialLogin';
+
 
 const Login = () => {
-
+const {loginUser} = useContext(AuthContex)
 
     const handleLogin = e =>{
-        e.preventDefault()
+      e.preventDefault()
+      const form = e.target
+      const name = form.name.value
+      const email = form.email.value
+      const password = form.password.value
+      const user = {name,email,password}
+
+      console.log(user);
+      loginUser(email,password)     
+.then(result=>{
+    const user = result.user
+    console.log(user);
+})
+.catch(error=>{
+    console.log(error)
+})
     }
     return (
         <div className="hero min-h-screen bg-base-200">
@@ -28,7 +47,7 @@ const Login = () => {
           <label className="label">
             <span className="label-text">Password</span>
           </label>
-          <input type="password" name='password' placeholder="password" className="input input-bordered" required />
+          <input type="text" name='password' placeholder="password" className="input input-bordered" required />
           <label className="label">
             <a href="#" className="label-text-alt link link-hover">Forgot password?</a>
           </label>
@@ -37,6 +56,7 @@ const Login = () => {
           <button className="btn btn-primary">Login</button>
         </div>
       </form>
+      <SocialLogin/>
       <p className='my-4 text-center'>New here <Link className='text-orange-600 font-bold' to='/signup'>Sign Up</Link></p>
     </div>
   </div>

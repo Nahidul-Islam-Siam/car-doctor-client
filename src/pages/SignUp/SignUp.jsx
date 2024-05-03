@@ -1,11 +1,13 @@
 import { Link } from "react-router-dom";
 import img from '../../assets/images/login/login.svg'
 import { useContext } from "react";
-import { AuthContex } from "../../Provider/AuthProvider";
+import { AuthContex } from "../../Provider/AuthProviders";
+import SocialLogin from "../shared/SocialLogin";
 
 
 const SignUp = () => {
- 
+ const {createUser} = useContext(AuthContex)
+
     const handleSignUp = e =>{
         e.preventDefault()
         const form = e.target
@@ -16,10 +18,13 @@ const SignUp = () => {
 
         console.log(user);
 
-       
-.then(res=>res.json())
-.then(data=>{
-    console.log(data);
+        createUser(email,password)     
+.then(result=>{
+    const user = result.user
+    console.log(user);
+})
+.catch(error=>{
+    console.log(error)
 })
 
     }
@@ -50,13 +55,14 @@ const SignUp = () => {
                 <label className="label">
                   <span className="label-text">Confirm Password</span>
                 </label>
-                <input type="password" name='password' placeholder="Your password" className="input input-bordered" required />
+                <input type="text" name='password' placeholder="Your password" className="input input-bordered" required />
                
               </div>
               <div className="form-control mt-6">
                 <button className="btn btn-primary">Sign Up</button>
               </div>
             </form>
+            <SocialLogin/>
             <p className='my-4 text-center'>Allready have an Account <Link className='text-orange-600 font-bold' to='/login'>Login</Link></p>
           </div>
         </div>

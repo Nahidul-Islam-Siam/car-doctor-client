@@ -1,7 +1,10 @@
 import { Link, NavLink } from "react-router-dom";
 import logo from '../../../assets/logo.svg'
+import { useContext } from "react";
+import { AuthContex } from "../../../Provider/AuthProviders";
 
 const Navbar = () => {
+  const {user,logout} = useContext(AuthContex)
 
   const links = <>
    <li><NavLink>Home</NavLink></li>
@@ -31,6 +34,48 @@ const Navbar = () => {
         </div>
         <div className="navbar-end">
           <a className="btn btn-outline btn-warning">Appoinment</a>
+          
+{
+  user? <div className="dropdown dropdown-end">
+  <div tabIndex={0} role="button" className="btn btn-ghost btn-circle border-pink-600 border-2 avatar">
+    <div className=" rounded-full">
+      <img alt="Tailwind CSS Navbar component" src={user?.photoURL ||  "https://daisyui.com/images/stock/photo-1534528741775-53994a69daeb.jpg"}  />
+    </div>
+  </div>
+  <ul tabIndex={0} className="mt-3 z-[1] p-2 shadow menu menu-sm dropdown-content bg-base-100 rounded-box w-52">
+    <li>
+      <a className="justify-between btn btn-sm btn-ghost">
+        {user?.displayName || 'user name not found'}
+        
+      </a>
+    </li>
+    
+    <li onClick={logout}><a>Logout</a></li>
+  </ul>
+</div>
+:
+<NavLink
+  to="/login"
+  style={({ isActive, isPending, isTransitioning }) => {
+    return {
+      fontWeight: isActive ? "bold" : "",
+      color: isPending ? "red" : "White",
+      viewTransitionName: isTransitioning ? "slide" : "",
+    };
+  }}
+>
+
+<span className="text-purple-600">L</span>
+ <span className="text-blue-600">o</span>
+ <span className="text-green-600">g</span>
+ <span className="text-yellow-600">i</span>
+ <span className="text-red-600">n</span>
+    
+</NavLink>
+
+}
+
+  
         </div>
       </div>
     );
