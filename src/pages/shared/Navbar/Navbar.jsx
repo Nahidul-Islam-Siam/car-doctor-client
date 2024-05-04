@@ -7,9 +7,12 @@ const Navbar = () => {
   const {user,logout} = useContext(AuthContex)
 
   const links = <>
-   <li><NavLink>Home</NavLink></li>
+   <li><NavLink to='/'>Home</NavLink></li>
               
     <li><NavLink>About</NavLink></li>
+  {
+    user?.email ?   <li><NavLink to='/booking'>My Bookings</NavLink></li> : ''
+  }
   </>
     return (
         <div className="navbar bg-base-100 h-24 mb-4">
