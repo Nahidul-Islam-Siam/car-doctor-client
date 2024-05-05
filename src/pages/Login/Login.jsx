@@ -3,13 +3,16 @@ import img from '../../assets/images/login/login.svg'
 import { useContext } from 'react';
 import { AuthContex } from '../../Provider/AuthProviders';
 import SocialLogin from '../shared/SocialLogin';
+import axios from 'axios';
 
 
 const Login = () => {
 const {loginUser} = useContext(AuthContex)
-const location = useLocation()
-console.log(location);
+
 const navigate = useNavigate()
+const location = useLocation()
+const from = location?.state || '/'
+
     const handleLogin = e =>{
       e.preventDefault()
       const form = e.target
@@ -21,9 +24,15 @@ const navigate = useNavigate()
       console.log(user);
       loginUser(email,password)     
 .then(result=>{
-    const user = result.user
-    console.log(user);
-    navigate(location?.state ? location?.state :'/')
+    const loggedInUser = result.user
+    console.log(loggedInUser);
+    const user = {email}
+    // get access token
+    axios.post('http://localhost:5000/jwt', user)
+    .then(res=>{
+      console.log(res.data);
+    })
+    // navigate(from)
 })
 .catch(error=>{
     console.log(error)

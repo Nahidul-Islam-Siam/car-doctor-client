@@ -7,17 +7,17 @@ import { useContext } from "react";
 // import { AuthContext } from "../Providers/AuthProviders";
 // import { useLocation, useNavigate } from "react-router-dom";
 import { AuthContex } from "../../Provider/AuthProviders";
-// import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const SocialLogin= () => {
 
   const {googleLogin,githubLogin} = useContext(AuthContex)
 
 
-  // navigation system
-// const navigate = useNavigate()
-// const location = useLocation()
-// const from = location?.state || '/'
+
+const navigate = useNavigate()
+const location = useLocation()
+const from = location?.state || '/'
 
 
 
@@ -26,7 +26,7 @@ const SocialLogin= () => {
   socialProvider()
   .then(result=>{
     if (result.user) {
-    //   navigate(from)
+      navigate(from)
     }
   })
  }

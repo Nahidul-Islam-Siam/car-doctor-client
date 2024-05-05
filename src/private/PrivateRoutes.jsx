@@ -20,11 +20,11 @@ const location = useLocation()
     }
 
 
-    if (user?.email) {
-        return children
+    if (!user) {
+        return  <Navigate  state={location.pathname || '/'} to='/login' ></Navigate>
     }
    
-    return  <Navigate state={Location.pathName} to='/login' replace></Navigate>
+    return <div> {children} </div>
 };
 
 export default PrivateRoutes;
