@@ -2,6 +2,7 @@
 import { GithubAuthProvider, GoogleAuthProvider, createUserWithEmailAndPassword, onAuthStateChanged, signInWithEmailAndPassword, signInWithPopup, signOut } from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import auth from "../Firebase/firebase.config";
+import axios from "axios";
 
 
 export const  AuthContex = createContext(null)
@@ -56,6 +57,15 @@ useEffect(()=>{
             setLoading(false)
         setUser(user)
         } 
+
+        // if user axists then issue a token
+        if(user){
+            const loggedUser = {email: user.email}
+            axios.post('http://localhost:5000/jwt',loggedUser, {withCredentials:true})
+            .then(res=>{
+                console.log('token response',res.data);
+            })
+        }
       });
       return () => unsubscribe()
 },[])
